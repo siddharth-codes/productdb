@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  #serveices refer to the containers to start
+
+  #mongo container
+  mongo_db:
+    container_name: db_container
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongo_db:/data/db
+    
+
+  #node container/service
+  api:
+    build: .
+    #above build is used instead of the image as we want to build the image
+    ports: 
+      - 4000:3000
+    depends_on:
+      - mongo_db
+
+volumes:
+  mongo_db: {}
